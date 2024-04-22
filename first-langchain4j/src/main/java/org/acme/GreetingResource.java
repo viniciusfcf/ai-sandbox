@@ -21,6 +21,11 @@ public class GreetingResource {
     @Inject
     TriageService triage;
 
+    @Inject
+    RequestTriageService requestTriageService;
+
+    
+
     @GET
     @Path("who")
     @Produces(MediaType.TEXT_PLAIN)
@@ -44,10 +49,24 @@ public class GreetingResource {
     }
 
     @GET
-    @Path("full-analize")
+    @Path("request-1")
     @Produces(MediaType.APPLICATION_JSON)
-    public TriagedReview fullAnalize() {
-        return triage.triage("I really love this bank. Not!");
+    public RequestTriageResponse request1() {
+        return requestTriageService.triage("Yesterday after a lot of rain a big hole appeared in front of my house, it needs to be repaired as soon as possible otherwise several vehicles will be damaged");
+    }
+
+    @GET
+    @Path("request-2")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RequestTriageResponse request2() {
+        return requestTriageService.triage("I just rented an apartment at XPTO and I have no power, I would like to request activation");
+    }
+
+    @GET
+    @Path("request-3")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RequestTriageResponse request3() {
+        return requestTriageService.triage("I'm sick and trying to sleep, in the front bar there's a band making a lot of noise. Could you call the police and check?");
     }
 }
 
@@ -84,9 +103,56 @@ interface TriageService {
     TriagedReview triage(String review);
 }
 
+@RegisterAiService
+interface RequestTriageService {
+    @SystemMessage("""
+        You are working for a proxy service between different companies, processing requests about
+        different products. Triage requests into positive and
+        negative ones, sumarizing and classifying responding with a JSON document.
+        """
+    )
+    @UserMessage("""
+        Your task is to process the request delimited by ---.
+        Apply sentiment analysis to the request to determine
+        if it is positive or negative, considering various languages.
+        
+
+        For example:
+        - `I love your work, you are the best!` is a 'POSITIVE' request
+        - `J'adore votre banque` is a 'POSITIVE' request
+        - `I hate your work, you are the worst!` is a 'NEGATIVE' request
+
+        Apply classification to the request to determine the destination area to the request.
+        if it is about car or street classify as DETRAN
+        if it is about energy, tree, light classify as CEAL
+        if you do not know the destination, classify as DONTKNOW
+
+        For example:
+        - `After the rain the street it is not ok` is a 'DETRAN' request
+        - `My house it is without energy` is a 'CEAL' request
+        
+
+        Respond with a JSON document containing:
+        - the 'evaluation' key set to 'POSITIVE' if the request is
+        positive, 'NEGATIVE' otherwise
+        - the 'classification' key set to 'DETRAN', 'CEAL' or 'DONTKNOW'
+        - the 'sumarization' key set the sumarization of the original request with a maximum of 10 words
+
+        ---
+        {request}
+        ---
+    """)
+    RequestTriageResponse triage(String request);
+}
+
 record TriagedReview(Evaluation evaluation, String message) {
     @JsonCreator
     public TriagedReview {}
+}
+
+record RequestTriageResponse(Evaluation evaluation, String classification, String sumarization) {
+    @JsonCreator
+    public RequestTriageResponse {}
 }
 
 enum Evaluation {
