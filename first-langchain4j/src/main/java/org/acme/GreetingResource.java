@@ -12,7 +12,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/hello")
+@Path("/")
 public class GreetingResource {
 
     @Inject
@@ -30,15 +30,23 @@ public class GreetingResource {
 
 
     @GET
+    @Path("poem")
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return "Hello from Quarkus REST "+myAiService.writeAPoem("Flower", 2);
+        return myAiService.writeAPoem("Flower", 4);
     }
 
     @GET
-    @Path("2")
+    @Path("review")
     @Produces(MediaType.APPLICATION_JSON)
-    public TriagedReview hello2() {
+    public TriagedReview review() {
+        return triage.triage("I really love this bank. Not!");
+    }
+
+    @GET
+    @Path("full-analize")
+    @Produces(MediaType.APPLICATION_JSON)
+    public TriagedReview fullAnalize() {
         return triage.triage("I really love this bank. Not!");
     }
 }
