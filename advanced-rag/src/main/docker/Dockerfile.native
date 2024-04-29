@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/advanded-rag .
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/advanced-rag .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/advanded-rag
+# docker run -i --rm -p 8080:8080 quarkus/advanced-rag
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8

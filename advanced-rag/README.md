@@ -1,4 +1,4 @@
-# advanded-rag
+# advanced-rag
 
 Aplicação utilizando RAG (sem ser easy rag) com elasticsearch como vector database
 
