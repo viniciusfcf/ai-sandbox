@@ -56,10 +56,17 @@ public class GreetingResource {
     }
 
     @GET
+    @Path("request-12")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object request12() {
+        return requestTriageService.triageToString("Yesterday after a lot of rain a big hole appeared in front of my house, it needs to be repaired as soon as possible otherwise several vehicles will be damaged");
+    }
+
+    @GET
     @Path("request-2")
     @Produces(MediaType.APPLICATION_JSON)
     public RequestTriageResponse request2() {
-        return requestTriageService.triage("I just rented an apartment at XPTO and I have no power, I would like to request activation");
+        return requestTriageService.triage("I just rented an apartment at XPTO and I have no energy power, I would like to request activation");
     }
 
     @GET
@@ -74,20 +81,18 @@ public class GreetingResource {
 @RegisterAiService
 interface TriageService {
     @SystemMessage("""
-        You are working for a bank, processing reviews about
-        financial products. Triage reviews into positive and
-        negative ones, responding with a JSON document.
-        """
-    )
+            You are working as a request proxy. You are an AI processing requests about different areas. You need to triage the requests into positive and negative ones.
+            You will always answer with a JSON document, and only this JSON document.
+            """)
     @UserMessage("""
         Your task is to process the review delimited by ---.
         Apply sentiment analysis to the review to determine
         if it is positive or negative, considering various languages.
 
         For example:
-        - `I love your bank, you are the best!` is a 'POSITIVE' review
-        - `J'adore votre banque` is a 'POSITIVE' review
-        - `I hate your bank, you are the worst!` is a 'NEGATIVE' review
+        - 'I love your bank, you are the best!' is a 'POSITIVE' review
+        - 'J'adore votre banque' is a 'POSITIVE' review
+        - 'I hate your bank, you are the worst!' is a 'NEGATIVE' review
 
         Respond with a JSON document containing:
         - the 'evaluation' key set to 'POSITIVE' if the review is
@@ -105,12 +110,36 @@ interface TriageService {
 
 @RegisterAiService
 interface RequestTriageService {
+    
     @SystemMessage("""
-        You are working for a proxy service between different companies, processing requests about
-        different products. Triage requests into positive and
-        negative ones, sumarizing and classifying responding with a JSON document.
-        """
-    )
+            You are working as a request proxy. You are an AI processing requests about different areas. You need to triage the requests into positive and negative ones.
+            You will always answer with a JSON document, and only this JSON document.
+            """)
+    @UserMessage("""
+        Your task is to process the review delimited by ---.
+        Apply a sentiment analysis to the passed review to determine if it is positive or negative.
+        The review can be in any language. So, you will need to identify the language.
+
+        Apply classification to the review to determine the destination area to the request.
+        if it is about car or street classify as DETRAN
+        if it is about energy, power, tree, light classify as CEAL
+        if you do not know the destination, classify as DONTKNOW
+
+        Answer with a JSON document containing:
+        - the 'evaluation' key set to 'POSITIVE' if the request is positive, 'NEGATIVE' otherwise
+        - the 'classification' key set to 'DETRAN', 'CEAL' or 'DONTKNOW'
+        - the 'sumarization' key set the sumarization of the original request with a maximum of 10 words
+
+        ---
+        {review}
+        ---
+        """)
+    RequestTriageResponse triage(String review);
+
+    @SystemMessage("""
+            You are working as a request proxy. You are an AI processing requests about different areas. You need to triage the requests into positive and negative ones.
+            You will always answer with a JSON document, and only this JSON document.
+            """)
     @UserMessage("""
         Your task is to process the request delimited by ---.
         Apply sentiment analysis to the request to determine
@@ -118,9 +147,9 @@ interface RequestTriageService {
         
 
         For example:
-        - `I love your work, you are the best!` is a 'POSITIVE' request
-        - `J'adore votre banque` is a 'POSITIVE' request
-        - `I hate your work, you are the worst!` is a 'NEGATIVE' request
+        - 'I love your work, you are the best!' is a 'POSITIVE' request
+        - 'J'adore votre banque' is a 'POSITIVE' request
+        - 'I hate your work, you are the worst!' is a 'NEGATIVE' request
 
         Apply classification to the request to determine the destination area to the request.
         if it is about car or street classify as DETRAN
@@ -128,8 +157,8 @@ interface RequestTriageService {
         if you do not know the destination, classify as DONTKNOW
 
         For example:
-        - `After the rain the street it is not ok` is a 'DETRAN' request
-        - `My house it is without energy` is a 'CEAL' request
+        - 'After the rain the street it is not ok' is a 'DETRAN' request
+        - 'My house it is without energy' is a 'CEAL' request
         
 
         Respond with a JSON document containing:
@@ -142,7 +171,7 @@ interface RequestTriageService {
         {request}
         ---
     """)
-    RequestTriageResponse triage(String request);
+    String triageToString(String request);
 }
 
 record TriagedReview(Evaluation evaluation, String message) {
