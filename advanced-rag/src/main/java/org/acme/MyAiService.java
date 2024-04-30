@@ -7,7 +7,7 @@ import io.quarkiverse.langchain4j.RegisterAiService;
 public interface MyAiService {
 
     @UserMessage("""
-        What my favourite color?
+        What is my favorite color?
             """)
     String whoIsTheBest();
 
