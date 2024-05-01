@@ -3,9 +3,10 @@ package org.acme;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
+import io.quarkiverse.langchain4j.RegisterAiService.NoRetrievalAugmentorSupplier;
 
 @RegisterAiService(
-    //retrievalAugmentor = RegisterAiService.BeanRetrieverSupplier.class
+    retrievalAugmentor = NoRetrievalAugmentorSupplier.class
 
 )
 public interface MyAiService {

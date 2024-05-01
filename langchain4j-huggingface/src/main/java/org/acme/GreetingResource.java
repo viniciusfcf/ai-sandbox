@@ -3,14 +3,23 @@ package org.acme;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import dev.langchain4j.data.document.Document;
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.store.embedding.EmbeddingStore;
+import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import io.quarkiverse.langchain4j.RegisterAiService;
+import io.quarkiverse.langchain4j.pgvector.PgVectorEmbeddingStore;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import static dev.langchain4j.data.document.splitter.DocumentSplitters.recursive;
+
 
 @Path("/")
 public class GreetingResource {
@@ -19,12 +28,51 @@ public class GreetingResource {
     MyAiService myAiService;
 
     @Inject
+    MyRAGAiService myRAGAiService;
+
+    @Inject
     TriageService triage;
 
     @Inject
     RequestTriageService requestTriageService;
 
-    
+    @Inject
+    EmbeddingStore<TextSegment> embeddingStore;
+
+    @Inject
+    EmbeddingModel embeddingModel;
+
+    /**
+     * The embedding store (the database).
+     * The bean is provided by the quarkus-langchain4j-pgvector extension.
+     */
+    @Inject
+    PgVectorEmbeddingStore store;
+
+    @GET
+    @Path("save")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String save(@QueryParam(value = "text") String text) throws InterruptedException {
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .embeddingStore(store)
+                .embeddingModel(embeddingModel)
+                .documentSplitter(recursive(500, 0))
+                .build();
+        Document document = Document.document(text);
+        ingestor.ingest(document);
+        Thread.sleep(1000); // to be sure that embeddings were persisted
+        return "ok";
+    }
+
+
+
+    @GET
+    @Path("color")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String favoriteColor() {
+        return myRAGAiService.favoriteColor();
+    }
+
 
     @GET
     @Path("who")
