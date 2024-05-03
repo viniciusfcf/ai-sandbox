@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: insurance-claim-processing-git
-          image: quay.io/rh-aiservices-bu/rhoai-lab-insurance-claim-app:1.3
+          image: docker.io/viniciusfcf/langchain4j-huggingface-jvm
           ports:
             - containerPort: 5000
               protocol: TCP
@@ -61,20 +61,6 @@ spec:
                   key: database-password
             - name: POSTGRES_PORT
               value: '5432'
-            - name: S3_ENDPOINT_URL
-              value: http://minio.ic-shared-minio.svc.cluster.local:9000
-            - name: IMAGES_BUCKET
-              value: $(NAMESPACE)
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: secret-minio
-                  key: aws_access_key_id
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-minio
-                  key: aws_secret_access_key
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
