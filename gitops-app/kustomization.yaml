@@ -9,6 +9,7 @@ resources:
 # wave 0
 - secret-db.yaml
 - pvc-db.yaml
+- sql-script-configmap.yaml
 # wave 1
 - deployment-db.yaml
 - service-db.yaml
