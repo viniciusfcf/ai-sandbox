@@ -13,12 +13,17 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import io.quarkiverse.langchain4j.pgvector.PgVectorEmbeddingStore;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import static dev.langchain4j.data.document.splitter.DocumentSplitters.recursive;
+
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 
 @Path("/")
@@ -42,12 +47,21 @@ public class GreetingResource {
     @Inject
     EmbeddingModel embeddingModel;
 
+    record Review(String review) {
+    }
+
     /**
      * The embedding store (the database).
      * The bean is provided by the quarkus-langchain4j-pgvector extension.
      */
     @Inject
     PgVectorEmbeddingStore store;
+
+    @Inject
+    @Channel("requests")
+    Emitter<TriagedReview> emitter;
+
+    
 
     @GET
     @Path("save")
@@ -89,11 +103,14 @@ public class GreetingResource {
         return myAiService.writeAPoem("Flower", 4);
     }
 
-    @GET
+    @POST
     @Path("review")
+    @Consumes
     @Produces(MediaType.APPLICATION_JSON)
-    public TriagedReview review() {
-        return triage.triage("I really love this bank. Not!");
+    public TriagedReview triage(Review review) {
+        TriagedReview triaged = triage.triage(review.review());
+        emitter.send(triaged);
+        return triaged;
     }
 
     @GET
