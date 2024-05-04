@@ -32,6 +32,8 @@ spec:
               value: http://llm.ic-shared-llm.svc.cluster.local:3000/
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: my-cluster-kafka-bootstrap:9092
+            - name: QUARKUS_LANGCHAIN4J_INFINISPAN_DIMENSION
+              value: '384'
             - name: MAX_NEW_TOKENS
               value: '1024'
             - name: TOP_K
