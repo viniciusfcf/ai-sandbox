@@ -8,9 +8,11 @@ commonLabels:
 resources:
 # wave 0
 #infinispans.infinispan.org "infinispan" is forbidden: User "system:serviceaccount:my-app:argocd-argocd-application-controller" cannot patch resource "infinispans" in API group "infinispan.org" in the namespace "my-app"
-#- infinispan-secret.yaml
+- infinispan-secret.yaml
 # wave 1
-#- infinispan-cluster.yaml
+- infinispan-cluster.yaml
+- kafka-cluster.yaml
+- kafka-topic.yaml
 # wave 2
 - deployment-app.yaml
 - service-app.yaml
