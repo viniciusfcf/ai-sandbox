@@ -1,6 +1,11 @@
 package org.acme;
 
 
+import static dev.langchain4j.data.document.splitter.DocumentSplitters.recursive;
+
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import dev.langchain4j.data.document.Document;
@@ -11,7 +16,6 @@ import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import io.quarkiverse.langchain4j.pgvector.PgVectorEmbeddingStore;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -20,10 +24,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import static dev.langchain4j.data.document.splitter.DocumentSplitters.recursive;
-
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 
 @Path("/")
@@ -55,7 +55,7 @@ public class GreetingResource {
      * The bean is provided by the quarkus-langchain4j-pgvector extension.
      */
     @Inject
-    PgVectorEmbeddingStore store;
+    EmbeddingStore<TextSegment> store;
 
     @Inject
     @Channel("requests")

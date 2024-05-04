@@ -7,13 +7,10 @@ commonLabels:
 
 resources:
 # wave 0
-- secret-db.yaml
-- pvc-db.yaml
 - sql-script-configmap.yaml
+- infinispan-secret.yaml
 # wave 1
-- deployment-db.yaml
-- service-db.yaml
-- db-init-job.yaml
+- infinispan-cluster.yaml
 # wave 2
 - deployment-app.yaml
 - service-app.yaml

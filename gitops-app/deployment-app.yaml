@@ -44,19 +44,19 @@ spec:
               value: '0.01'
             - name: REPETITION_PENALTY
               value: '1.03'
-            - name: POSTGRES_HOST
-              value: claimdb.$(NAMESPACE).svc.cluster.local
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://claimdb.$(NAMESPACE).svc.cluster.local:5432/claimdb
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: claimdb
                   key: database-name
-            - name: POSTGRES_USER
+            - name: QUARKUS_DATASOURCE_JDBC_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: claimdb
                   key: database-user
-            - name: POSTGRES_PASSWORD
+            - name: QUARKUS_DATASOURCE_JDBC_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: claimdb
