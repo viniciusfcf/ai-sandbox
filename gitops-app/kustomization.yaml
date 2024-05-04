@@ -7,9 +7,10 @@ commonLabels:
 
 resources:
 # wave 0
-- infinispan-secret.yaml
+#infinispans.infinispan.org "infinispan" is forbidden: User "system:serviceaccount:my-app:argocd-argocd-application-controller" cannot patch resource "infinispans" in API group "infinispan.org" in the namespace "my-app"
+#- infinispan-secret.yaml
 # wave 1
-- infinispan-cluster.yaml
+#- infinispan-cluster.yaml
 # wave 2
 - deployment-app.yaml
 - service-app.yaml
