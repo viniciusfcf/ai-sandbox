@@ -28,7 +28,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: INFERENCE_SERVER_URL
+            - name: QUARKUS_LANGCHAIN4J_HUGGINGFACE_CHAT_MODEL_INFERENCE_ENDPOINT_URL
               value: http://llm.ic-shared-llm.svc.cluster.local:3000/
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: my-cluster-kafka-bootstrap:9092
@@ -46,23 +46,6 @@ spec:
               value: '1.03'
             - name: QUARKUS_DATASOURCE_JDBC_URL
               value: jdbc:postgresql://claimdb.$(NAMESPACE).svc.cluster.local:5432/claimdb
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: claimdb
-                  key: database-name
-            - name: QUARKUS_DATASOURCE_JDBC_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: claimdb
-                  key: database-user
-            - name: QUARKUS_DATASOURCE_JDBC_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: claimdb
-                  key: database-password
-            - name: POSTGRES_PORT
-              value: '5432'
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
