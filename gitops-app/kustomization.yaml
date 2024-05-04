@@ -7,7 +7,6 @@ commonLabels:
 
 resources:
 # wave 0
-- sql-script-configmap.yaml
 - infinispan-secret.yaml
 # wave 1
 - infinispan-cluster.yaml
