@@ -60,16 +60,10 @@
       <artifactId>quarkus-smallrye-openapi</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.mvnpm</groupId>
-      <artifactId>importmap</artifactId>
-      <version>1.0.10</version>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-websockets</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.mvnpm.at.mvnpm</groupId>
-      <artifactId>vaadin-webcomponents</artifactId>
-      <version>24.3.11</version>
-      <scope>runtime</scope>
-    </dependency>
+    
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-messaging-kafka</artifactId>
@@ -78,15 +72,29 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-health</artifactId>
     </dependency>
+    <!-- UI -->
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-junit5</artifactId>
-      <scope>test</scope>
+        <groupId>org.mvnpm</groupId>
+        <artifactId>importmap</artifactId>
+        <version>1.0.8</version>
     </dependency>
     <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <scope>test</scope>
+        <groupId>org.mvnpm.at.mvnpm</groupId>
+        <artifactId>vaadin-webcomponents</artifactId>
+        <version>24.2.1</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.mvnpm</groupId>
+        <artifactId>es-module-shims</artifactId>
+        <scope>runtime</scope>
+        <version>1.8.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.mvnpm</groupId>
+        <artifactId>wc-chatbot</artifactId>
+        <version>0.1.2</version>
+        <scope>runtime</scope>
     </dependency>
   </dependencies>
   <build>

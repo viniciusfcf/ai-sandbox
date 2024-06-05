@@ -3,12 +3,16 @@ package org.acme;
 
 import static dev.langchain4j.data.document.splitter.DocumentSplitters.recursive;
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import dev.langchain4j.data.document.Document;
+import dev.langchain4j.data.document.Metadata;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.service.SystemMessage;
@@ -72,7 +76,11 @@ public class GreetingResource {
                 .embeddingModel(embeddingModel)
                 .documentSplitter(recursive(500, 0))
                 .build();
-        Document document = Document.document(text);
+        Metadata metadata = new Metadata();
+        metadata.add("user", "Vinicius");
+        metadata.add("request id", new Random().nextInt());
+        metadata.add("request date", LocalDateTime.now());
+        Document document = Document.document(text, metadata);
         ingestor.ingest(document);
         Thread.sleep(1000); // to be sure that embeddings were persisted
         return "ok";
@@ -239,7 +247,7 @@ interface RequestTriageService {
     String triageToString(String request);
 }
 
-record TriagedReview(Evaluation evaluation, String message) {
+record TriagedReview(Evaluation evaluation, String message, String user) {
     @JsonCreator
     public TriagedReview {}
 }

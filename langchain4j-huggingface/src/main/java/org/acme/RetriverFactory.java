@@ -15,7 +15,7 @@ public class RetriverFactory {
         EmbeddingStoreContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
                 .embeddingModel(model)
                 .embeddingStore(store)
-                .maxResults(3)
+                .maxResults(10)
                 .build();
         return DefaultRetrievalAugmentor
                 .builder()

@@ -1,12 +1,13 @@
 package org.acme;
 
+import org.mvnpm.importmap.Aggregator;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 
-import io.mvnpm.importmap.Aggregator;
 
 /**
  * Dynamically create the import map
