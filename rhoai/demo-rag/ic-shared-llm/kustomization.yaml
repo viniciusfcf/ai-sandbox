@@ -12,8 +12,9 @@ resources:
 - token.yaml
 # wave 1
 - pvc.yaml
-- deployment.yaml
-- service.yaml
+#Removi pq n tem GPU para subir
+#- deployment.yaml
+#- service.yaml
 - deployment-flant5.yaml
 - service-flant5.yaml
 # wave 2
