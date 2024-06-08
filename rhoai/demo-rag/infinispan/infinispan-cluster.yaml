@@ -1,7 +1,8 @@
 kind: Infinispan
 apiVersion: infinispan.org/v1
 metadata:
-  name: infinispan
+  name: ic-shared-infinispan
+  namespace: ic-shared-infinispan
 spec:
   replicas: 1
   image: 'quay.io/infinispan/server:15.0'
