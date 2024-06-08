@@ -1,0 +1,14 @@
+kind: Infinispan
+apiVersion: infinispan.org/v1
+metadata:
+  name: infinispan
+spec:
+  replicas: 1
+  image: 'quay.io/infinispan/server:15.0'
+  expose:
+    type: Route
+  security:
+    endpointAuthentication: true
+    endpointEncryption:
+      type: None
+    endpointSecretName: infinispan-generated-secret

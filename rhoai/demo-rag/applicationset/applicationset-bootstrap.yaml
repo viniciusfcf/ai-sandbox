@@ -8,10 +8,15 @@ spec:
   - list:
       elements:
       - cluster: in-cluster
-        name: ic-shared-img-det
+        name: ic-shared-llm
         repoURL: https://github.com/viniciusfcf/ai-sandbox.git
         targetRevision: main
         path: rhoai/demo-rag/ic-shared-llm
+      - cluster: in-cluster
+        name: infinispan
+        repoURL: https://github.com/viniciusfcf/ai-sandbox.git
+        targetRevision: main
+        path: rhoai/demo-rag/infinispan
   template:
     metadata:
       name: '{{name}}'
