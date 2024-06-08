@@ -1,7 +1,7 @@
 kind: Infinispan
 apiVersion: infinispan.org/v1
 metadata:
-  name: ic-shared-infinispan
+  name: infinispan
   namespace: ic-shared-infinispan
 spec:
   replicas: 1
