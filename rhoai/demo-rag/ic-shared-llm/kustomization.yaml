@@ -11,10 +11,12 @@ resources:
 - fix-odf-config.yaml
 - token.yaml
 # wave 1
-- pvc.yaml
+#- pvc.yaml
+- pvc-ollama.yaml
 #Removi pq n tem GPU para subir
 #- deployment.yaml
 #- service.yaml
-- deployment-flant5.yaml
-- service-flant5.yaml
+- deployment-ollama.yaml
+- service-ollama.yaml
+- route-ollama.yaml
 # wave 2
