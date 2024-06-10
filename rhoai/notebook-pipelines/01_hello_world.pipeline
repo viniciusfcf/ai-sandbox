@@ -29,7 +29,7 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "../components/create_hello_world_message.py"
+              "filename": "components/create_hello_world_message.py"
             },
             "label": "",
             "ui_data": {
@@ -91,7 +91,7 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "../components/create_random_number.py"
+              "filename": "components/create_random_number.py"
             },
             "label": "",
             "ui_data": {
@@ -149,7 +149,7 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "../components/create_odds_or_evens_message.py"
+              "filename": "components/create_odds_or_evens_message.py"
             },
             "label": "",
             "ui_data": {
