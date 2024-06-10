@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.MediaType;
 
 
 @Path("/")
-public class GreetingResource {
+public class DocumentResource {
 
     @Inject
     EmbeddingModel embeddingModel;
@@ -43,9 +43,9 @@ public class GreetingResource {
                 .documentSplitter(recursive(500, 0))
                 .build();
         Metadata metadata = new Metadata();
-        metadata.add("user", "Vinicius");
-        metadata.add("request id", new Random().nextInt());
-        metadata.add("request date", LocalDateTime.now());
+        metadata.put("user", "Vinicius");
+        metadata.put("request id", new Random().nextInt());
+        metadata.put("request date", LocalDateTime.now().toString());
         Document document = Document.document(text, metadata);
         ingestor.ingest(document);
         Thread.sleep(1000); // to be sure that embeddings were persisted

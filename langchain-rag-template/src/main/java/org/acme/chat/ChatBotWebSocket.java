@@ -13,12 +13,8 @@ public class ChatBotWebSocket {
     @Inject
     ChatService chat;
 
-    // @Inject
-    // ChatMemoryBean chatMemoryBean;
-
     @OnClose
     void onClose(Session session) {
-        // chatMemoryBean.clear(session);
     }
 
     @OnMessage
