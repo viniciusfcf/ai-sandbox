@@ -3,6 +3,13 @@
 
 Fonte: https://redhatquickcourses.github.io/rhods-deploy/rhods-deploy/1.33/chapter1/section2.html
 
+# workbench
+- Criar um com base DS
+- clonar https://github.com/viniciusfcf/ai-sandbox.git
+- Abrir arquivos ai-sandbox/rhoai/notebook-pipelines
+
+- Fazer deploy do modelo rf_iris.onnx com o nome my-model-server
+
 - ```export DS_PROJECT_NAME=my-ds-project```
 - ```export MODEL_NAME=my-model-name```
 - ```export TOKEN=$(oc whoami -t)```
